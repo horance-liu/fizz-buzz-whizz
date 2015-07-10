@@ -1,12 +1,12 @@
-{application, game,
+{application, fizz_buzz,
  [
-  {description, "game"},
+  {description, "fizz_buzz"},
   {vsn, "1"},
   {registered, []},
   {applications, [
                   kernel,
                   stdlib
                  ]},
-  {mod, {game_app, []}},
+  {mod, {fizz_buzz_app, []}},
   {env, []}
  ]}.

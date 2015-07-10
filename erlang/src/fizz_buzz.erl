@@ -1,4 +1,4 @@
--module(game).
+-module(fizz_buzz).
 -export([play/1]).
 
 times(N) -> 
@@ -45,8 +45,8 @@ play(L) ->
    
     R2 = 'OR'(['AND'([R1_3, R1_5, R1_7]),
                'AND'([R1_3, R1_5]),
-               'AND'([R1_5, R1_7]),
-               'AND'([R1_3, R1_7])]),
+               'AND'([R1_3, R1_7]),
+               'AND'([R1_5, R1_7])]),
    
     R3 = rule(contains(3), fun(_) -> "Fizz" end),
     Rd = rule(fun(_) -> true end, fun(N) -> N end),
