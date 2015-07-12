@@ -7,8 +7,8 @@ struct RuleResult
 {
     RuleResult(const std::string& = "");
 
-    bool collect(bool succ, const RuleResult&);
-    bool collect(bool succ, const std::string&);
+    bool collect(bool matched, const RuleResult&);
+    bool collect(bool matched, const std::string&);
 
     bool operator==(const RuleResult& rhs) const;
     bool operator!=(const RuleResult& rhs) const;

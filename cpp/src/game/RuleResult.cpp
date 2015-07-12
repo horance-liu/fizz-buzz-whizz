@@ -3,15 +3,15 @@
 RuleResult::RuleResult(const std::string& result) : result(result)
 {}
 
-bool RuleResult::collect(bool succ, const std::string& str)
+bool RuleResult::collect(bool matched, const std::string& str)
 {
-    if (succ) result += str;
-    return succ;
+    if (matched) result += str;
+    return matched;
 }
 
-bool RuleResult::collect(bool succ, const RuleResult& rr)
+bool RuleResult::collect(bool matched, const RuleResult& rr)
 {
-    return collect(succ, rr.result);
+    return collect(matched, rr.result);
 }
 
 bool RuleResult::operator==(const RuleResult& rhs) const

@@ -1,12 +1,11 @@
 #ifndef HAFB02649_F7FE_4C8D_BF52_F3B241A9B753
 #define HAFB02649_F7FE_4C8D_BF52_F3B241A9B753
 
-#include "l0-infra/dci/Role.h"
-#include "game/Predicate.h"
 #include "game/Action.h"
-#include "game/RuleResult.h"
+#include "game/Matcher.h"
 #include <vector>
-#include <memory>
+
+struct RuleResult;
 
 DEFINE_ROLE(Rule)
 {
@@ -15,8 +14,8 @@ DEFINE_ROLE(Rule)
 
 typedef std::shared_ptr<Rule> SharedRule;
 
-SharedRule atom(Predicate pred, Action action);
-SharedRule orelse(std::vector<SharedRule> rules);
-SharedRule andalso(std::vector<SharedRule> rules);
+SharedRule atom(const SharedMatcher&, const SharedAction&);
+SharedRule anyof(const std::vector<SharedRule>&);
+SharedRule allof(const std::vector<SharedRule>&);
 
 #endif

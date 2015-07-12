@@ -11,22 +11,22 @@ FIXTURE(GameTest)
 
     SharedRule make_spec()
     {
-        auto r1_3 = atom(times_3, to_fizz);
-        auto r1_5 = atom(times_5, to_buzz);
-        auto r1_7 = atom(times_7, to_whizz);
+        auto r1_3 = atom(times(3), to("Fizz"));
+        auto r1_5 = atom(times(5), to("Buzz"));
+        auto r1_7 = atom(times(7), to("Whizz"));
 
-        auto r1 = orelse({r1_3, r1_5, r1_7});
+        auto r1 = anyof({r1_3, r1_5, r1_7});
 
-        auto r2 = orelse({ andalso({r1_3, r1_5, r1_7})
-                         , andalso({r1_3, r1_5})
-                         , andalso({r1_3, r1_7})
-                         , andalso({r1_5, r1_7})
-                         });
+        auto r2 = anyof({ allof({r1_3, r1_5, r1_7})
+                        , allof({r1_3, r1_5})
+                        , allof({r1_3, r1_7})
+                        , allof({r1_5, r1_7})
+                        });
 
-        auto r3 = atom(contains_3,  to_fizz);
-        auto rd = atom(always_true, nop);
+        auto r3 = atom(contains(3),  to("Fizz"));
+        auto rd = atom(always(true), nop());
 
-        return orelse({r3, r2, r1, rd});
+        return anyof({r3, r2, r1, rd});
     }
 
     void rule(int n, const std::string& expect)

@@ -1,85 +1,74 @@
 #include "game/Rule.h"
-#include <memory>
+#include "game/RuleResult.h"
 
 namespace
 {
     struct Atom : Rule
     {
-        Atom(Predicate pred, Action action) : pred(pred), action(action)
+        Atom(const SharedMatcher& matcher, const SharedAction& action)
+          : matcher(matcher), action(action)
         {}
 
     private:
         OVERRIDE(bool apply(int n, RuleResult& rr) const)
         {
-            return rr.collect(pred(n), action(n));
+            return rr.collect(matcher->matches(n), action->to(n));
         }
 
     private:
-        Predicate pred;
-        Action action;
+        SharedMatcher matcher;
+        SharedAction  action;
     };
-}
 
-SharedRule atom(Predicate pred, Action action)
-{
-    return SharedRule(new Atom(pred, action));
-}
-
-namespace
-{
-    struct LogicRule : Rule
+    struct CombinableRule : Rule
     {
-        LogicRule(std::vector<SharedRule> rules) : rules(rules)
+        CombinableRule(bool shortcut, const std::vector<SharedRule>& rules)
+          : shortcut(shortcut), rules(rules)
         {}
 
     protected:
-        bool doApply(int n, RuleResult& rr, bool shortcut) const
+        OVERRIDE(bool apply(int n, RuleResult& rr) const)
         {
             for(auto rule : rules)
             {
                 if(rule->apply(n, rr) == shortcut)
-                {
                     return shortcut;
-                }
             }
-
             return !shortcut;
         }
 
     private:
+        bool shortcut;
         std::vector<SharedRule> rules;
     };
 
-    struct LogicOr : LogicRule
+    struct Anyof : CombinableRule
     {
-        using LogicRule::LogicRule;
-
-    private:
-        OVERRIDE(bool apply(int n, RuleResult& rr) const)
-        {
-            return doApply(n, rr, true);
-        }
+        Anyof(const std::vector<SharedRule>& rules)
+          : CombinableRule(true, rules)
+        {}
     };
 
-    struct LogicAnd : LogicRule
+    struct Allof : CombinableRule
     {
-        using LogicRule::LogicRule;
+        Allof(const std::vector<SharedRule>& rules)
+          : CombinableRule(false, rules)
+        {}
 
     private:
         OVERRIDE(bool apply(int n, RuleResult& rr) const)
         {
             RuleResult result;
-            return rr.collect(doApply(n, result, false), result);
+            return rr.collect(CombinableRule::apply(n, result), result);
         }
     };
 }
 
-SharedRule orelse(std::vector<SharedRule> rules)
-{
-    return SharedRule(new LogicOr(rules));
-}
+SharedRule atom(const SharedMatcher& matcher, const SharedAction& action)
+{ return std::make_shared<Atom>(matcher, action); }
 
-SharedRule andalso(std::vector<SharedRule> rules)
-{
-    return SharedRule(new LogicAnd(rules));
-}
+SharedRule anyof(const std::vector<SharedRule>& rules)
+{ return std::make_shared<Anyof>(rules); }
+
+SharedRule allof(const std::vector<SharedRule>& rules)
+{ return std::make_shared<Allof>(rules); }
