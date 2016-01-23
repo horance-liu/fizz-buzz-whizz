@@ -1,7 +1,5 @@
 #include "magellan/magellan.hpp"
-
 #include "fizz-buzz-whizz/Rule.h"
-#include "fizz-buzz-whizz/RuleResult.h"
 
 USING_HAMCREST_NS
 
@@ -52,7 +50,7 @@ FIXTURE(FizzBuzzWhizzSpec) {
     ASSERT_THAT(result.toString(), eq(expect));
   }
 
-  Rule make_spec() {
+  Rule makeSpec() {
     auto r1_3 = atom(times(3), to("Fizz"));
     auto r1_5 = atom(times(5), to("Buzz"));
     auto r1_7 = atom(times(7), to("Whizz"));
@@ -72,5 +70,5 @@ FIXTURE(FizzBuzzWhizzSpec) {
     return anyof( { r3, r2, r1, rd });
   }
 
-  Rule spec = make_spec();
+  Rule spec = makeSpec();
 };

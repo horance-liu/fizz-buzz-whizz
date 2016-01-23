@@ -3,8 +3,7 @@
 
 #include <string>
 
-struct RuleResult
-{
+struct RuleResult {
     explicit RuleResult(const std::string& = "");
 
     bool collect(bool matched, const RuleResult&);
