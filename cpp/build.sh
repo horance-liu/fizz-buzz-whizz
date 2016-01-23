@@ -37,4 +37,4 @@ cmake -E chdir build cmake -DCMAKE_BUILD_TYPE=Debug ..
 
 ################################################################################
 exec_on_fail "cmake --build build"
-exec_on_fail "build/fizz-buzz-cpp-test"
+exec_on_fail "build/fizz-buzz-whizz-test"

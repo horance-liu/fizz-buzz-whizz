@@ -1,4 +1,4 @@
-#include "game/RuleResult.h"
+#include "fizz-buzz-whizz/RuleResult.h"
 
 RuleResult::RuleResult(const std::string& result) : result(result)
 {}
@@ -14,12 +14,7 @@ bool RuleResult::collect(bool matched, const RuleResult& rr)
     return collect(matched, rr.result);
 }
 
-bool RuleResult::operator==(const RuleResult& rhs) const
+const std::string& RuleResult::toString() const
 {
-    return result == rhs.result;
-}
-
-bool RuleResult::operator!=(const RuleResult& rhs) const
-{
-    return !(*this == rhs);
+    return result;
 }

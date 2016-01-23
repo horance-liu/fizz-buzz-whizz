@@ -1,4 +1,4 @@
-project(fizz-buzz-cpp)
+project(fizz-buzz-whizz)
 
 cmake_minimum_required(VERSION 2.8)
 
@@ -14,6 +14,6 @@ file(GLOB_RECURSE all_files
     test/*.cc
     test/*.c)
 
-add_executable(fizz-buzz-cpp-test ${all_files})
-target_link_libraries(fizz-buzz-cpp-test magellan l0-infra)
+add_executable(fizz-buzz-whizz-test ${all_files})
+target_link_libraries(fizz-buzz-whizz-test magellan hamcrest l0-infra)
 

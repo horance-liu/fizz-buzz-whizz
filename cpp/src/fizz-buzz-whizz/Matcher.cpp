@@ -1,4 +1,4 @@
-#include "game/Matcher.h"
+#include "fizz-buzz-whizz/Matcher.h"
 
 namespace
 {

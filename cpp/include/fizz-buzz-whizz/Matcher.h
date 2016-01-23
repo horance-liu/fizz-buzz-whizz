@@ -9,7 +9,7 @@ DEFINE_ROLE(Matcher)
     ABSTRACT(bool matches(int n) const);
 };
 
-typedef std::shared_ptr<Matcher> SharedMatcher;
+using SharedMatcher = std::shared_ptr<Matcher>;
 
 SharedMatcher times(int times);
 SharedMatcher contains(int num);

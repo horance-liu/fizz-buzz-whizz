@@ -10,7 +10,7 @@ DEFINE_ROLE(Action)
     ABSTRACT(std::string to(int) const);
 };
 
-typedef std::shared_ptr<Action> SharedAction;
+using SharedAction = std::shared_ptr<Action>;
 
 SharedAction to(const std::string&);
 SharedAction nop();

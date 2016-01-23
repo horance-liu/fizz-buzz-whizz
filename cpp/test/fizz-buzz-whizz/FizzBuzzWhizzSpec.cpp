@@ -1,12 +1,12 @@
 #include "magellan/magellan.hpp"
-#include "game/Rule.h"
-#include "game/RuleResult.h"
+
+#include "fizz-buzz-whizz/Rule.h"
+#include "fizz-buzz-whizz/RuleResult.h"
 
 USING_HAMCREST_NS
 
-FIXTURE(GameTest)
+FIXTURE(FizzBuzzWhizzSpec)
 {
-    RuleResult result;
     SharedRule spec = make_spec();
 
     SharedRule make_spec()
@@ -31,8 +31,9 @@ FIXTURE(GameTest)
 
     void rule(int n, const std::string& expect)
     {
+        RuleResult result;
         spec->apply(n, result);
-        ASSERT_THAT(result, eq(RuleResult(expect)));
+        ASSERT_THAT(result.toString(), eq(expect));
     }
 
     TEST("r1_3")
@@ -48,11 +49,6 @@ FIXTURE(GameTest)
     TEST("r1_7")
     {
         rule(7, "Whizz");
-    }
-
-    TEST("r3")
-    {
-        rule(13, "Fizz");
     }
 
     TEST("r2_1")
@@ -73,6 +69,11 @@ FIXTURE(GameTest)
     TEST("r2_4")
     {
         rule((5*7)*2, "BuzzWhizz");
+    }
+
+    TEST("r3")
+    {
+        rule(13, "Fizz");
     }
 
     TEST("priority of r3 greater than r2_4")

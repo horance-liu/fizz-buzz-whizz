@@ -1,5 +1,5 @@
-#include "game/Rule.h"
-#include "game/RuleResult.h"
+#include "fizz-buzz-whizz/Rule.h"
+#include "fizz-buzz-whizz/RuleResult.h"
 
 namespace
 {
@@ -19,7 +19,15 @@ namespace
         SharedMatcher matcher;
         SharedAction  action;
     };
+}
 
+SharedRule atom(const SharedMatcher& matcher, const SharedAction& action)
+{
+    return std::make_shared<Atom>(matcher, action);
+}
+
+namespace
+{
     struct CombinableRule : Rule
     {
         CombinableRule(bool shortcut, const std::vector<SharedRule>& rules)
@@ -64,11 +72,12 @@ namespace
     };
 }
 
-SharedRule atom(const SharedMatcher& matcher, const SharedAction& action)
-{ return std::make_shared<Atom>(matcher, action); }
-
 SharedRule anyof(const std::vector<SharedRule>& rules)
-{ return std::make_shared<Anyof>(rules); }
+{
+    return std::make_shared<Anyof>(rules);
+}
 
 SharedRule allof(const std::vector<SharedRule>& rules)
-{ return std::make_shared<Allof>(rules); }
+{
+    return std::make_shared<Allof>(rules);
+}

@@ -1,5 +1,5 @@
-#include "game/Action.h"
-#include "l0-infra/std/String.h"
+#include "fizz-buzz-whizz/Action.h"
+#include <l0-infra/std/String.h>
 
 namespace
 {
@@ -22,13 +22,16 @@ SharedAction to(const std::string& str)
     return std::make_shared<ToString>(str);
 }
 
-SharedAction nop()
+namespace
 {
     class Nop : public Action
     {
         OVERRIDE(std::string to(int n) const)
         { return stdext::toString(n); }
     };
+}
 
+SharedAction nop()
+{
     return std::make_shared<Nop>();
 }
