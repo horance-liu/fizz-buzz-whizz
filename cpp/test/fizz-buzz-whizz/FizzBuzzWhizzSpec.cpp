@@ -5,84 +5,72 @@
 
 USING_HAMCREST_NS
 
-FIXTURE(FizzBuzzWhizzSpec)
-{
-    SharedRule spec = make_spec();
+FIXTURE(FizzBuzzWhizzSpec) {
+  TEST("times(3) -> Fizz") {
+    rule(3, "Fizz");
+  }
 
-    SharedRule make_spec()
-    {
-        auto r1_3 = atom(times(3), to("Fizz"));
-        auto r1_5 = atom(times(5), to("Buzz"));
-        auto r1_7 = atom(times(7), to("Whizz"));
+  TEST("times(5) -> Buzz") {
+    rule(5, "Buzz");
+  }
 
-        auto r1 = anyof({r1_3, r1_5, r1_7});
+  TEST("times(7) -> Whizz") {
+    rule(7, "Whizz");
+  }
 
-        auto r2 = anyof({ allof({r1_3, r1_5, r1_7})
-                        , allof({r1_3, r1_5})
-                        , allof({r1_3, r1_7})
-                        , allof({r1_5, r1_7})
-                        });
+  TEST("times(3) && times(5) && times(7) -> FizzBuzzWhizz") {
+    rule(3 * 5 * 7, "FizzBuzzWhizz");
+  }
 
-        auto r3 = atom(contains(3),  to("Fizz"));
-        auto rd = atom(always(true), nop());
+  TEST("times(3) && times(5) -> FizzBuzz") {
+    rule(3 * 5, "FizzBuzz");
+  }
 
-        return anyof({r3, r2, r1, rd});
-    }
+  TEST("times(3) && times(7) -> FizzWhizz") {
+    rule(3 * 7, "FizzWhizz");
+  }
 
-    void rule(int n, const std::string& expect)
-    {
-        RuleResult result;
-        spec->apply(n, result);
-        ASSERT_THAT(result.toString(), eq(expect));
-    }
+  TEST("times(5) && times(7) -> BuzzWhizz") {
+    rule((5 * 7) * 2, "BuzzWhizz");
+  }
 
-    TEST("r1_3")
-    {
-        rule(3, "Fizz");
-    }
+  TEST("contains(3) -> Fizz") {
+    rule(13, "Fizz");
+  }
 
-    TEST("r1_5")
-    {
-        rule(5, "Buzz");
-    }
+  TEST("the priority of contains(3) is highest") {
+    rule(35 /* 5*7 */, "Fizz");
+  }
 
-    TEST("r1_7")
-    {
-        rule(7, "Whizz");
-    }
+  TEST("others -> others") {
+    rule(2, "2");
+  }
 
-    TEST("r2_1")
-    {
-        rule(3*5*7, "FizzBuzzWhizz");
-    }
+  void rule(int n, const std::string& expect) {
+    RuleResult result;
+    spec(n, result);
+    ASSERT_THAT(result.toString(), eq(expect));
+  }
 
-    TEST("r2_2")
-    {
-        rule(3*5, "FizzBuzz");
-    }
+  Rule make_spec() {
+    auto r1_3 = atom(times(3), to("Fizz"));
+    auto r1_5 = atom(times(5), to("Buzz"));
+    auto r1_7 = atom(times(7), to("Whizz"));
 
-    TEST("r2_3")
-    {
-        rule(3*7, "FizzWhizz");
-    }
+    auto r1 = anyof( { r1_3, r1_5, r1_7 });
 
-    TEST("r2_4")
-    {
-        rule((5*7)*2, "BuzzWhizz");
-    }
+    auto r2 = anyof({
+      allof( { r1_3, r1_5, r1_7 } ),
+      allof( { r1_3, r1_5 } ),
+      allof( { r1_3, r1_7 } ),
+      allof( { r1_5, r1_7 } )
+    });
 
-    TEST("r3")
-    {
-        rule(13, "Fizz");
-    }
+    auto r3 = atom(contains(3), to("Fizz"));
+    auto rd = atom(always(true), nop());
 
-    TEST("priority of r3 greater than r2_4")
-    {
-        rule(5*7/*35*/, "Fizz");
-    }
+    return anyof( { r3, r2, r1, rd });
+  }
 
-    TEST("rd")
-    {
-        rule(2, "2");
-    }
+  Rule spec = make_spec();
 };
