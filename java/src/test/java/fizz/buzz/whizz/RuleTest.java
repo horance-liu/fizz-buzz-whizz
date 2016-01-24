@@ -74,7 +74,12 @@ public class RuleTest {
     Rule r1_7 = atom(times(7), to("Whizz"));
 
     Rule r1 = anyof(r1_3, r1_5, r1_7);
-    Rule r2 = anyof(allof(r1_3, r1_5, r1_7), allof(r1_3, r1_5), allof(r1_3, r1_7), allof(r1_5, r1_7));
+    
+    Rule r2 = anyof(allof(r1_3, r1_5, r1_7), 
+                    allof(r1_3, r1_5), 
+                    allof(r1_3, r1_7), 
+                    allof(r1_5, r1_7));
+    
     Rule r3 = atom(contains(3), to("Fizz"));
     Rule rd = atom(always(true), nop());
 
