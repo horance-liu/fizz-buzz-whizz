@@ -1,11 +1,17 @@
+# Maven
+target/
+
+# Eclipse
 .classpath
 .project
 .settings/
 
+# IDEA
 *.iml
 *.ipr
 *.iws
 
-target/
-project/
-lib/
+# Gradle
+build/
+.gradle/
+.gradletasknamecache

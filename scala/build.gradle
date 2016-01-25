@@ -1,0 +1,19 @@
+apply plugin: 'scala'
+
+group = "fizz.buzz.whizz"
+version = "1.0-SNAPSHOT"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.7'
+  testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
+}
+
+task spec(dependsOn: ['testClasses'], type: JavaExec) {
+  main = 'org.scalatest.tools.Runner'
+  args = ['-R', 'build/classes/test', '-o']
+  classpath = sourceSets.test.runtimeClasspath
+}
