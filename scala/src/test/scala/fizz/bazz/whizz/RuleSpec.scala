@@ -22,7 +22,7 @@ class RuleSpec extends FunSpec {
       allof(r1_5, r1_7))
 
     val r3 = atom(contains(3), to("Fizz"))
-    val rd = atom(always(true), nop());
+    val rd = atom(always(true), nop);
 
     anyof(r3, r2, r1, rd)
   }
