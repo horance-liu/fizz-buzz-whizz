@@ -1,7 +1,11 @@
-name := "scala-spec"
+organization := "fizz.bazz.whizz"
 
-version := "1.0"
+name := "fizz-bazz-whizz"
+
+version := "1.0-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.11" % "3.0.0-M15" % "test"
+libraryDependencies += Seq(
+  "org.scalatest" % "scalatest_2.11" % "2.2.6" % "test"
+)
