@@ -15,7 +15,7 @@ public class RuleResult {
   }
 
   public boolean collect(boolean matched, RuleResult rr) {
-    return collect(matched, rr.buff.toString());
+    return collect(matched, rr.toString());
   }
 
   @Override
