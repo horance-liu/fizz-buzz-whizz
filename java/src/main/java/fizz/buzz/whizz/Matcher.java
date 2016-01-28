@@ -1,5 +1,7 @@
 package fizz.buzz.whizz;
 
+import static java.lang.String.valueOf;
+
 @FunctionalInterface
 public interface Matcher {
   boolean matches(int n);
@@ -9,7 +11,7 @@ public interface Matcher {
   }
 
   static Matcher contains(int num) {
-    return n -> Integer.toString(n).contains(Integer.toString(num));
+    return n -> valueOf(n).contains(valueOf(num));
   }
 
   static Matcher always(boolean bool) {

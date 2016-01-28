@@ -9,6 +9,6 @@ public interface Action {
   }
 
   static Action nop() {
-    return n -> Integer.toString(n);
+    return n -> String.valueOf(n);
   }
 }
