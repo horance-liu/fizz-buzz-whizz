@@ -7,9 +7,7 @@ import static fizz.buzz.whizz.Matcher.*
 import static fizz.buzz.whizz.Rules.*
 
 class RuleSpec extends Specification {
-  Rule spec = spec()
-
-  def spec() {
+  private static def spec() {
     Rule r1_3 = atom(times(3), to("Fizz"))
     Rule r1_5 = atom(times(5), to("Buzz"))
     Rule r1_7 = atom(times(7), to("Whizz"))
@@ -29,9 +27,7 @@ class RuleSpec extends Specification {
 
   def "fizz buzz whizz"() {
     expect:
-    RuleResult result = new RuleResult();
-    spec.apply(n, result);
-    result.toString() == expect
+    spec().apply(n) == expect
 
     where:
     n            | expect

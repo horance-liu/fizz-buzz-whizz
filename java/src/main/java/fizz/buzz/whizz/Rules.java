@@ -1,35 +1,30 @@
 package fizz.buzz.whizz;
 
 import java.util.Arrays;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.joining;
 
 public final class Rules {
   public static Rule atom(Matcher matcher, Action action) {
-    return (n, rr) -> rr.collect(matcher.matches(n), action.to(n));
+    return n -> matcher.matches(n) ? action.to(n) : "";
   }
 
   public static Rule anyof(Rule... rules) {
-    return (n, rr) -> stream(rules).anyMatch(rule(n, rr));
+    return n ->stringStream(n, rules)
+        .filter(s -> !s.isEmpty())
+        .findFirst()
+        .orElse("");
   }
 
   public static Rule allof(Rule... rules) {
-    return (n, rr) -> {
-      RuleResult result = new RuleResult();
-      return rr.collect(allMatch(rules).apply(n, result), result);
-    };
+    return n -> stringStream(n, rules)
+        .collect(joining());
   }
 
-  private static Rule allMatch(Rule... rules) {
-    return (n, rr) -> stream(rules).allMatch(rule(n, rr));
-  }
-
-  private static Predicate<Rule> rule(int n, RuleResult rr) {
-    return r -> r.apply(n, rr);
-  }
-
-  private static Stream<Rule> stream(Rule... rules) {
-    return Arrays.asList(rules).stream();
+  private static Stream<String> stringStream(int n, Rule[] rules) {
+    return Arrays.asList(rules).stream()
+        .map(r -> r.apply(n));
   }
 
   private Rules() {
