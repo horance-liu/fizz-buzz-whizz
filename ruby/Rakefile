@@ -1,0 +1,17 @@
+require 'rubygems'
+require 'rake'
+
+require 'rspec'
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.rspec_opts = ['--format doc', '--color']
+end
+
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
+
+task :default => :spec
+
