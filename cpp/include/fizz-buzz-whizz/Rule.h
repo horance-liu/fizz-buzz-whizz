@@ -3,12 +3,11 @@
 
 #include "fizz-buzz-whizz/Action.h"
 #include "fizz-buzz-whizz/Matcher.h"
-#include "fizz-buzz-whizz/RuleResult.h"
 #include <vector>
 
-using Rule = std::function<bool(int, RuleResult&)>;
+using Rule = std::function<std::string(int)>;
 
-Rule atom(Matcher, Action);
+Rule atom(const Matcher&, const Action&);
 Rule anyof(const std::vector<Rule>&);
 Rule allof(const std::vector<Rule>&);
 

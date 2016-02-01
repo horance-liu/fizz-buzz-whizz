@@ -1,31 +1,26 @@
 #include "fizz-buzz-whizz/Rule.h"
-#include <l0-infra/std/Algorithm.h>
+#include <numeric>
+#include <algorithm>
 
-Rule atom(Matcher matcher, Action action) {
-  return [=](auto n, auto& rr) {
-    return rr.collect(matcher(n), action(n));
+Rule atom(const Matcher& matcher, const Action& action) {
+  return [=](auto n) {
+    return matcher(n) ? action(n) : "";
   };
 }
 
 Rule anyof(const std::vector<Rule>& rules) {
-  return [=](auto n, auto& rr) {
-    return stdext::any_of(rules, [&](auto& rule) {
-      return rule(n, rr); });
+  return [=](auto n) {
+    auto r = std::find_if(rules.begin(), rules.end(),
+      [&](const auto& r) { return !r(n).empty(); });
+    return r != std::end(rules) ? (*r)(n) : "";
   };
 }
 
-namespace {
-  Rule allMatch(const std::vector<Rule>& rules) {
-    return [=](auto n, auto& rr) {
-      return stdext::all_of(rules, [&](auto& rule) {
-        return rule(n, rr); });
-    };
-  }
-}
-
 Rule allof(const std::vector<Rule>& rules) {
-  return [=](auto n, auto& rr) {
-    RuleResult result;
-    return rr.collect(allMatch(rules)(n, result), result);
+  return [=](auto n) {
+    return std::accumulate(rules.begin(), rules.end(), std::string(""),
+      [=](const auto& result, const auto& rule) {
+        return result + rule(n);
+    });
   };
 }
