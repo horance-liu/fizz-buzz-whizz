@@ -4,18 +4,18 @@ import fizz.bazz.whizz.Actions.Action
 import fizz.bazz.whizz.Matchers.Matcher
 
 object Rules {
-  type Rule = (Int, RuleResult) => Boolean
+  type Rule = (Int) => String
 
   def atom(matcher: => Matcher, action: => Action): Rule =
-    (n, rr) => rr.collect(matcher(n), action(n))
+    n => if (matcher(n)) action(n) else ""
 
   def anyof(rules: Rule*): Rule =
-    (n, rr) => rules.exists(_(n, rr))
+    n => rules.map(_(n))
+      .filterNot(_.isEmpty)
+      .headOption
+      .getOrElse("")
 
   def allof(rules: Rule*): Rule =
-    (n, rr) => {
-      val result = new RuleResult
-      rr.collect(rules.forall(_(n, result)), result)
-    }
+    n => rules.foldLeft("") { _ + _(n) }
 }
 
