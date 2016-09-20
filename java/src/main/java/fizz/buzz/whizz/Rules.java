@@ -23,7 +23,7 @@ public final class Rules {
   }
 
   private static Stream<String> stringStream(int n, Rule[] rules) {
-    return Arrays.asList(rules).stream()
+    return Arrays.stream(rules)
         .map(r -> r.apply(n));
   }
 
