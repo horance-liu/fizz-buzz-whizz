@@ -19,5 +19,5 @@ file(GLOB_RECURSE all_files
     test/*.C)
 
 add_executable(fizz-buzz-whizz-test ${all_files})
-target_link_libraries(fizz-buzz-whizz-test magellan hamcrest l0-infra)
+target_link_libraries(fizz-buzz-whizz-test cut)
 

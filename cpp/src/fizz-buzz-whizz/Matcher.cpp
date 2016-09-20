@@ -1,7 +1,5 @@
 #include "fizz-buzz-whizz/Matcher.h"
-#include <l0-infra/std/String.h>
-
-USING_STDEXT_NS
+#include "cui/algo/__string__.h"
 
 Matcher times(int times) {
   return [=](auto n) {
@@ -11,7 +9,7 @@ Matcher times(int times) {
 
 Matcher contains(int num) {
   return [=](auto n) {
-    return toString(n).find(toString(num)) != std::string::npos;
+    return cui::toString(n).find(cui::toString(num)) != std::string::npos;
   };
 }
 

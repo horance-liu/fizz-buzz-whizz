@@ -1,5 +1,5 @@
 #include "fizz-buzz-whizz/Action.h"
-#include <l0-infra/std/String.h>
+#include "cui/algo/__string__.h"
 
 Action to(const std::string& str) {
   return [=](auto) {
@@ -9,6 +9,6 @@ Action to(const std::string& str) {
 
 Action nop() {
   return [](auto n) {
-    return stdext::toString(n);
+    return cui::toString(n);
   };
 }

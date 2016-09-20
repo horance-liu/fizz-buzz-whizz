@@ -14,12 +14,12 @@ OS:
 - MAC OS
 - Windows: not supported
 
-## Install Magellan
+## Install Cut
 
 ```bash
-$ git clone https://github.com/horance-liu/magellan
+$ git clone https://github.com/horance-liu/cut
 ```
-To install magellan, please refer to `magellan/README.md`
+To install cut, please refer to `cut/README.md`
 
 ## Build
 
