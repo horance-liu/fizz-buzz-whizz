@@ -1,6 +1,6 @@
-package fizz.bazz.whizz
+package fizz.buzz.whizz
 
-object Actions {
+object Action {
   type Action = Int => String
 
   def to(str: String): Action = _ => str

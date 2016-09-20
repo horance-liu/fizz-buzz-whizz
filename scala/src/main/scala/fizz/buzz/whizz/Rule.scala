@@ -1,10 +1,10 @@
-package fizz.bazz.whizz
+package fizz.buzz.whizz
 
-import fizz.bazz.whizz.Actions.Action
-import fizz.bazz.whizz.Matchers.Matcher
-
-object Rules {
+object Rule {
   type Rule = (Int) => String
+
+  import Action.Action
+  import Matcher.Matcher
 
   def atom(matcher: => Matcher, action: => Action): Rule =
     n => if (matcher(n)) action(n) else ""

@@ -1,6 +1,6 @@
-package fizz.bazz.whizz
+package fizz.buzz.whizz
 
-object Matchers {
+object Matcher {
   type Matcher = Int => Boolean
 
   def times(n: Int): Matcher = _ % n == 0
