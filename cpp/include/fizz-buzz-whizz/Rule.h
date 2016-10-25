@@ -7,8 +7,8 @@
 
 using Rule = std::function<std::string(int)>;
 
-Rule atom(const Matcher&, const Action&);
-Rule anyof(const std::vector<Rule>&);
-Rule allof(const std::vector<Rule>&);
+Rule atom(Matcher&&, Action&&);
+Rule anyof(std::vector<Rule>&&);
+Rule allof(std::vector<Rule>&&);
 
 #endif

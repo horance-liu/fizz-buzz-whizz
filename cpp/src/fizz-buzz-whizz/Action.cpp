@@ -1,8 +1,8 @@
 #include "fizz-buzz-whizz/Action.h"
 #include "cui/algo/__string__.h"
 
-Action to(const std::string& str) {
-  return [=](auto) {
+Action to(std::string&& str) {
+  return [str = std::move(str)](auto) {
     return str;
   };
 }

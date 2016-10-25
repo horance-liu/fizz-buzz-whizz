@@ -6,7 +6,7 @@
 
 using Action = std::function<std::string(int)>;
 
-Action to(const std::string&);
+Action to(std::string&&);
 Action nop();
 
 #endif
