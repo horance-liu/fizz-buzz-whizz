@@ -1,20 +1,20 @@
 #include "fizz-buzz-whizz/Matcher.h"
-#include "cui/algo/__string__.h"
+#include <string>
 
-Matcher times(int times) {
-  return [=](auto n) {
-    return n % times == 0;
+Matcher times(int n) {
+  return [n](int m) {
+    return m % n == 0;
   };
 }
 
-Matcher contains(int num) {
-  return [=](auto n) {
-    return cui::toString(n).find(cui::toString(num)) != std::string::npos;
+Matcher contains(int n) {
+  return [n](int m) {
+    return std::to_string(m).find(std::to_string(n)) != std::string::npos;
   };
 }
 
-Matcher always(bool value) {
-  return [=](auto) {
-    return value;
+Matcher always() {
+  return [](int) {
+    return true;
   };
 }
