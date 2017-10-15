@@ -7,6 +7,6 @@ using Matcher = std::function<bool(int)>;
 
 Matcher times(int);
 Matcher contains(int);
-Matcher always(bool);
+Matcher always();
 
 #endif
